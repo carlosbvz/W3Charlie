@@ -1,0 +1,1 @@
+console.log('I am loggin from the main.js file.');
