@@ -8,4 +8,4 @@ Here I am creating a basic project using gulp to undersand the concepts of:
 - pipe() method
 - parallel() & series() methods
 
-I am based on Travis Maynard's book
+I am based on Travis Maynard's book "Getting started with Gulp"

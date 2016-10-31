@@ -1,1 +1,2 @@
-console.log('I am login from the secondary.js file.')
+console.log('I am login from the secondary.js file.');
+
