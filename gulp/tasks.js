@@ -10,6 +10,7 @@ var plumber = require('gulp-plumber');
 var imagemin =require('gulp-imagemin');
 var connect = require('connect');
 var serve 	= require('serve-static');
+var browsersync = require('browser-sync');
 
 gulp.task('styles',function(){
 	return 	gulp.src(config.css.src)
@@ -42,9 +43,17 @@ gulp.task('serve', function(){
 			.on('listening',function(){
 				console.log('Server running: View at hhtp://localhost:8080');
 			});
-})
+});
 
-gulp.task('default',['styles','scripts'],function(){
+gulp.task('browsersync', function(cb){
+	return browsersync({
+		server: {
+			baseDir: './'
+		}
+	}, cb);
+});
+
+gulp.task('default',['styles','scripts','serve'],function(){
 	gulp.watch(config.css.watch,['styles']);
 	gulp.watch(config.scripts.watch, ['scripts']);
 	gulp.watch(config.images.watch, ['images']);
