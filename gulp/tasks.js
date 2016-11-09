@@ -11,6 +11,8 @@ var imagemin =require('gulp-imagemin');
 var connect = require('connect');
 var serve 	= require('serve-static');
 var browsersync = require('browser-sync');
+var browserify = require('browserify');
+var source 	= require('vinyl-source-stream');
 
 gulp.task('styles',function(){
 	return 	gulp.src(config.css.src)
@@ -37,6 +39,13 @@ gulp.task('images', function() {
 			.pipe(gulp.dest(config.images.dest));
 });
 
+gulp.task('browserify', function(){
+	return 	browserify(config.scripts.app)
+			.bundle()
+			.pipe(source('bundle.js'))
+			.pipe(gulp.dest(config.scripts.dest));
+});
+
 gulp.task('serve', function(){
 	return 	connect().use(serve('./'))
 			.listen(8080)
@@ -44,6 +53,7 @@ gulp.task('serve', function(){
 				console.log('Server running: View at hhtp://localhost:8080');
 			});
 });
+
 
 gulp.task('browsersync', function(cb){
 	return browsersync({
@@ -53,11 +63,37 @@ gulp.task('browsersync', function(cb){
 	}, cb);
 });
 
-gulp.task('default',['styles','scripts','serve'],function(){
-	gulp.watch(config.css.watch,['styles']);
-	gulp.watch(config.scripts.watch, ['scripts']);
-	gulp.watch(config.images.watch, ['images']);
+gulp.task('default',['styles','browserify','images','browsersync'],function(){
+	gulp.watch(config.css.watch,['styles',browsersync.reload]);
+	gulp.watch(config.scripts.watch, ['browserify',browsersync.reload]);
+	gulp.watch(config.images.watch, ['images',browsersync.reload]);
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

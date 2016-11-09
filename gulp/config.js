@@ -9,7 +9,8 @@ module.exports = {
 	scripts: {
 		src: './app/js/*.js',
 		dest: './dist/assets/scripts',
-		watch: 'app/css/*.js'
+		app: './app/js/app.js',
+		watch: 'app/js/*.js'
 	},
 	images: {
 		src: './app/img/*.*',

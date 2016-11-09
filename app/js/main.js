@@ -1,1 +1,17 @@
-console.log('I am loggin from the main.js file.');
+
+
+// bind events to DOM
+var bindEventsToUI = function() {
+
+}
+
+// public interface
+var init = function() {
+	console.log('main.js')
+}
+
+
+// export public interface
+module.exports = {
+	init:init
+}

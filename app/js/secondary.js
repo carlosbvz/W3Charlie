@@ -1,2 +1,14 @@
-console.log('I am login from the secondary.js file.');
 
+// bind events to DOM
+var bindEventsToUI = function() {
+
+}
+
+// public interface
+var init = function() {
+	console.log('secondary.js')
+}
+
+module.exports = {
+	init:init
+}
