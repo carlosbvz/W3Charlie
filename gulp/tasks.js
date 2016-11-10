@@ -31,7 +31,7 @@ gulp.task('scripts',function(){
 			.pipe(plumber())
 			.pipe(jshint())
 			.pipe(jshint.reporter('default'))
-			.pipe(concat('all.js'))
+			.pipe(concat('bundle.js'))
 			.pipe(uglify())
 			.pipe(plumber.stop())
 			.pipe(gulp.dest(config.scripts.dest))
