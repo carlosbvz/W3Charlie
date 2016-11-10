@@ -1,1 +1,1 @@
-var main=require("./main.js"),secondary=require("./secondary.js");console.log("I am loggin from the main.js file."),console.log("I am login from the secondary.js file.");
+var main=require("./main.js"),secondary=require("./secondary.js");main.init(),secondary.init();var bindEventsToUI=function(){},init=function(){console.log("main.js")};module.exports={init:init};var bindEventsToUI=function(){},init=function(){console.log("secondary.js")};module.exports={init:init};

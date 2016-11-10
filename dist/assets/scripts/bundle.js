@@ -18,31 +18,31 @@ secondary.init();
 // bind events to DOM
 var bindEventsToUI = function() {
 
-}
+};
 
 // public interface
 var init = function() {
-	console.log('main.js')
-}
+	console.log('main.js');
+};
 
 
 // export public interface
 module.exports = {
 	init:init
-}
+};
 },{}],3:[function(require,module,exports){
 
 // bind events to DOM
 var bindEventsToUI = function() {
 
-}
+};
 
 // public interface
 var init = function() {
-	console.log('secondary.js')
-}
+	console.log('secondary.js');
+};
 
 module.exports = {
 	init:init
-}
+};
 },{}]},{},[1]);

@@ -16,6 +16,10 @@ var source 	= require('vinyl-source-stream');
 
 gulp.task('styles',function(){
 	return 	gulp.src(config.css.src)
+			.pipe(plumber(function (error) {
+                gutil.log(error.message);
+                this.emit('end');
+            }))
 			.pipe(concat('all.css'))
 			// .pipe(myth())
 			.pipe(sass())
@@ -42,7 +46,9 @@ gulp.task('images', function() {
 gulp.task('browserify', function(){
 	return 	browserify(config.scripts.app)
 			.bundle()
+			.pipe(plumber())
 			.pipe(source('bundle.js'))
+			.pipe(plumber.stop())
 			.pipe(gulp.dest(config.scripts.dest));
 });
 
