@@ -10,21 +10,17 @@ var getComponentsInUI = function() {
 }
 
 var init = function(modules) {	
-
 	components = getComponentsInUI();
-
 	for( var module in modules ) {
 
 		if(	(components.indexOf(module) != -1) // If the component is present in UI
 							|| 							
-			(modules[module].autoLunch === true)) {     // If component needs to be autoLunched
+			(modules[module].autoLunch === true)) { // If component needs to be autoLunched
 
 				modules[module].init();
 		}
-	}
+	} 
 }
-
-
  
 module.exports = {
 	init: init

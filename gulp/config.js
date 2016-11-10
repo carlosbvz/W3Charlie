@@ -2,15 +2,16 @@ module.exports = {
 	app: './app',
 	dist: './dist',
 	css: {
-		src: './app/css/*.css',
+		src: './app/assets/styles/global.scss',
 		dest: './dist/assets/css',
-		watch: 'app/css/*.css'
+		watch: ['app/components/**/*.scss',
+				'app/assets/styles/*.scss',
+				'app/assets/styles/vendor/*.scss']
 	},
 	scripts: {
-		src: './app/js/*.js',
+		src: './app/assets/scripts/app.js',
 		dest: './dist/assets/scripts',
-		app: './app/js/app.js',
-		watch: ['app/js/*.js','app/js/core/*.js','app/js/modules/*.js']
+		watch: ['app/components/**/*.js','app/assets/scripts/core/*.js']
 	},
 	images: {
 		src: './app/img/*.*',

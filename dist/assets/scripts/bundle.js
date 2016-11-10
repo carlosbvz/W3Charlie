@@ -1,8 +1,8 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-
-
+/*
+| 	Gets the initializer and inits it with all the modules
+*/
 var initializer = require('./core/initializer.js');
-
 initializer.init(require('./core/modules'));
 
 
@@ -22,21 +22,17 @@ var getComponentsInUI = function() {
 }
 
 var init = function(modules) {	
-
 	components = getComponentsInUI();
-
 	for( var module in modules ) {
 
 		if(	(components.indexOf(module) != -1) // If the component is present in UI
 							|| 							
-			(modules[module].autoLunch === true)) {     // If component needs to be autoLunched
+			(modules[module].autoLunch === true)) { // If component needs to be autoLunched
 
 				modules[module].init();
 		}
-	}
+	} 
 }
-
-
  
 module.exports = {
 	init: init
@@ -49,9 +45,9 @@ module.exports = {
 */
 module.exports = {
 
-	main: 		require('../modules/main.js'),
-	secondary: 	require('../modules/secondary.js')
- 
+	pubsub: 	require('./pubsub.js'),
+ 	header: 	require('../../../components/header/header.js'),
+ 	footer: 	require('../../../components/footer/footer.js'),
 
 
 
@@ -59,8 +55,43 @@ module.exports = {
 
 }
 
-},{"../modules/main.js":4,"../modules/secondary.js":5}],4:[function(require,module,exports){
+},{"../../../components/footer/footer.js":5,"../../../components/header/header.js":6,"./pubsub.js":4}],4:[function(require,module,exports){
+var events = {};
 
+
+var subscribe = function (eventName, fn) {  // on
+    events[eventName] = events[eventName] || [];
+    events[eventName].push(fn);
+};
+
+var unsubscribe = function(eventName, fn) {
+    if (events[eventName]) {
+      for (var i = 0; i < events[eventName].length; i++) {
+        if (events[eventName][i] === fn) {
+          events[eventName].splice(i, 1);
+          break;
+        }
+      };
+    }
+};
+
+var publish = function (eventName, data) {
+    if (events[eventName]) {
+      events[eventName].forEach(function(fn) {
+        fn(data);
+      });
+    }
+}
+
+
+module.exports = {
+    subscribe: subscribe,
+    unsubscribe: unsubscribe,
+    publish: publish
+}
+
+},{}],5:[function(require,module,exports){
+var pubsub = require('../../assets/scripts/core/pubsub.js');
 
 // bind events to DOM
 var bindEventsToUI = function() {
@@ -69,7 +100,10 @@ var bindEventsToUI = function() {
 
 // public interface
 var init = function() {
-	console.log('main.js');
+	console.log('footer'); 
+	pubsub.publish('peopleChanged', 3);
+	pubsub.publish('peopleChanged', 4);
+	pubsub.publish('peopleChanged', 5);
 };
 
 
@@ -78,7 +112,8 @@ module.exports = {
 	init:init,
 	autoLunch: false
 };
-},{}],5:[function(require,module,exports){
+},{"../../assets/scripts/core/pubsub.js":4}],6:[function(require,module,exports){
+var pubsub = require('../../assets/scripts/core/pubsub.js');
 
 // bind events to DOM
 var bindEventsToUI = function() {
@@ -87,11 +122,18 @@ var bindEventsToUI = function() {
 
 // public interface
 var init = function() {
-	console.log('secondary.js');
+	console.log('header');
+	pubsub.subscribe('peopleChanged', handler);
 };
 
+var handler = function(data) {
+	console.log('header triggered'+data);
+}
+
+
+// export public interface
 module.exports = {
 	init:init,
 	autoLunch: false
 };
-},{}]},{},[1]);
+},{"../../assets/scripts/core/pubsub.js":4}]},{},[1]);

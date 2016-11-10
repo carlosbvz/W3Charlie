@@ -18,7 +18,6 @@ gulp.task('styles',function(){
 	return 	gulp.src(config.css.src)
 			.pipe(plumber())
 			.pipe(concat('all.css'))
-			// .pipe(myth())
 			.pipe(sass())
 			.pipe(plumber.stop())
 			.pipe(gulp.dest(config.css.dest));
@@ -42,7 +41,7 @@ gulp.task('images', function() {
 });
 
 gulp.task('browserify', function(){
-	return 	browserify(config.scripts.app)
+	return 	browserify(config.scripts.src)
 			.bundle()
 			.pipe(plumber())
 			.pipe(source('bundle.js'))

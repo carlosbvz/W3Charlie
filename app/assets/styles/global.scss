@@ -1,0 +1,24 @@
+/*------------------------------------*\
+  	Vendors (Third party files)
+\*------------------------------------*/
+@import "./vendor/normalize";
+
+
+
+
+
+/*------------------------------------*\
+  	Base (Global components used 
+  	throughout the site)
+\*------------------------------------*/
+@import "./vars";
+@import "./mixins"; 
+@import "./_global"; 
+
+
+
+
+/*------------------------------------*\
+  	Components
+\*------------------------------------*/
+@import "../../components/header/header";
