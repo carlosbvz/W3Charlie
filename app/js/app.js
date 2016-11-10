@@ -1,12 +1,9 @@
-var main = require('./main.js');
-var secondary = require('./secondary.js');
+
+
+var initializer = require('./core/initializer.js');
+
+initializer.init(require('./core/modules'));
 
 
 
-/*
-| 	This approach is missing an 'initiator' which will look if the component 
-|	is present in the DOM and then trigger the 'init' function
-*/
-main.init();
-secondary.init();
 

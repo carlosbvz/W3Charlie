@@ -1,5 +1,4 @@
 
-
 // bind events to DOM
 var bindEventsToUI = function() {
 
@@ -7,11 +6,10 @@ var bindEventsToUI = function() {
 
 // public interface
 var init = function() {
-	console.log('main.js');
+	console.log('secondary.js');
 };
 
-
-// export public interface
 module.exports = {
-	init:init
+	init:init,
+	autoLunch: false
 };

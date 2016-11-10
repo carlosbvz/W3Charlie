@@ -1,18 +1,65 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var main = require('./main.js');
-var secondary = require('./secondary.js');
+
+
+var initializer = require('./core/initializer.js');
+
+initializer.init(require('./core/modules'));
 
 
 
+
+
+},{"./core/initializer.js":2,"./core/modules":3}],2:[function(require,module,exports){
+
+
+var getComponentsInUI = function() {
+	var componetsList = [];
+	var componentsInUI = document.querySelectorAll('[data-action-name]');
+	for( var i = 0; i < componentsInUI.length; i++ ) {
+		componetsList.push(componentsInUI[i].getAttribute('data-action-name'))
+	}
+	return componetsList;
+}
+
+var init = function(modules) {	
+
+	components = getComponentsInUI();
+
+	for( var module in modules ) {
+
+		if(	(components.indexOf(module) != -1) // If the component is present in UI
+							|| 							
+			(modules[module].autoLunch === true)) {     // If component needs to be autoLunched
+
+				modules[module].init();
+		}
+	}
+}
+
+
+ 
+module.exports = {
+	init: init
+}
+
+
+},{}],3:[function(require,module,exports){
 /*
-| 	This approach is missing an 'initiator' which will look if the component 
-|	is present in the DOM and then trigger the 'init' function
+|	Modules goes here
 */
-main.init();
-secondary.init();
+module.exports = {
+
+	main: 		require('../modules/main.js'),
+	secondary: 	require('../modules/secondary.js')
+ 
 
 
-},{"./main.js":2,"./secondary.js":3}],2:[function(require,module,exports){
+
+
+
+}
+
+},{"../modules/main.js":4,"../modules/secondary.js":5}],4:[function(require,module,exports){
 
 
 // bind events to DOM
@@ -28,9 +75,10 @@ var init = function() {
 
 // export public interface
 module.exports = {
-	init:init
+	init:init,
+	autoLunch: false
 };
-},{}],3:[function(require,module,exports){
+},{}],5:[function(require,module,exports){
 
 // bind events to DOM
 var bindEventsToUI = function() {
@@ -43,6 +91,7 @@ var init = function() {
 };
 
 module.exports = {
-	init:init
+	init:init,
+	autoLunch: false
 };
 },{}]},{},[1]);
