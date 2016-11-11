@@ -114,7 +114,7 @@ var init = function() {
 // export public interface
 module.exports = {
 	init:init,
-	autoLunch: false
+	autoLunch: true
 };
 },{"../../assets/scripts/core/pubsub.js":4}],6:[function(require,module,exports){
 var pubsub = require('../../assets/scripts/core/pubsub.js');

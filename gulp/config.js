@@ -1,7 +1,6 @@
 module.exports = {
 	app: './app',
 	dist: './dist',
-	tmp: '.tmp',
 	styles: {
 		src: './app/assets/styles/main.scss',
 		dest: './dist/assets/styles',
@@ -16,6 +15,7 @@ module.exports = {
 				'app/assets/scripts/core/*.js']
 	},
 	assemble: {
+		dest: './dist',
 		watch: [	'./app/components/**/*.hbs',
 				'./app/layouts/*.hbs',
 				'./app/pages/*.hbs',

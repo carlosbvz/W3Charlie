@@ -1,4 +1,4 @@
 - Get plumber to work with browserify.
-- Implement handlebars
-- Understand sass precision and sass 
-- includePaths: ['.']
+- Implement handlebars data.
+- Understand sass precision and sass includePaths: ['.']
+- List pages in index

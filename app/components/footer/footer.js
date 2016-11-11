@@ -17,5 +17,5 @@ var init = function() {
 // export public interface
 module.exports = {
 	init:init,
-	autoLunch: false
+	autoLunch: true
 };
