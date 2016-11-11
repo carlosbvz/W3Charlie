@@ -1,6 +1,7 @@
 module.exports = {
 	app: './app',
 	dist: './dist',
+	tmp: '.tmp',
 	styles: {
 		src: './app/assets/styles/main.scss',
 		dest: './dist/assets/styles',
