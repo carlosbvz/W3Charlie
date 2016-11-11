@@ -8,9 +8,9 @@ var bindEventsToUI = function() {
 // public interface
 var init = function() {
 	console.log('footer'); 
-	pubsub.publish('peopleChanged', 3);
-	pubsub.publish('peopleChanged', 4);
-	pubsub.publish('peopleChanged', 5);
+	pubsub.trigger('peopleChanged', 3);
+	pubsub.trigger('peopleChanged', 4);
+	pubsub.trigger('peopleChanged', 5);
 };
 
 

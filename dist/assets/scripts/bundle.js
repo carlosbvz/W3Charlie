@@ -3,7 +3,9 @@
 | 	Gets the initializer and inits it with all the modules
 */
 var initializer = require('./core/initializer.js');
-initializer.init(require('./core/modules'));
+var modules 	= require('./core/modules');
+
+initializer.init(modules);
 
 
 
@@ -56,11 +58,13 @@ module.exports = {
 }
 
 },{"../../../components/footer/footer.js":5,"../../../components/header/header.js":6,"./pubsub.js":4}],4:[function(require,module,exports){
+
 var events = {};
 
-
-var subscribe = function (eventName, fn) {  // on
-    events[eventName] = events[eventName] || [];
+var subscribe = function (eventName, fn) {  
+    // if events[eventName] is not Null, Undefined nor empty, sets to himself
+    // if it is undefined (not existed yet) it gets created.
+    events[eventName] = events[eventName] || [];  
     events[eventName].push(fn);
 };
 
@@ -75,7 +79,7 @@ var unsubscribe = function(eventName, fn) {
     }
 };
 
-var publish = function (eventName, data) {
+var trigger = function (eventName, data) {
     if (events[eventName]) {
       events[eventName].forEach(function(fn) {
         fn(data);
@@ -87,7 +91,7 @@ var publish = function (eventName, data) {
 module.exports = {
     subscribe: subscribe,
     unsubscribe: unsubscribe,
-    publish: publish
+    trigger: trigger
 }
 
 },{}],5:[function(require,module,exports){
@@ -101,9 +105,9 @@ var bindEventsToUI = function() {
 // public interface
 var init = function() {
 	console.log('footer'); 
-	pubsub.publish('peopleChanged', 3);
-	pubsub.publish('peopleChanged', 4);
-	pubsub.publish('peopleChanged', 5);
+	pubsub.trigger('peopleChanged', 3);
+	pubsub.trigger('peopleChanged', 4);
+	pubsub.trigger('peopleChanged', 5);
 };
 
 

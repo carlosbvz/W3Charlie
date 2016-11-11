@@ -1,8 +1,10 @@
+
 var events = {};
 
-
-var subscribe = function (eventName, fn) {  // on
-    events[eventName] = events[eventName] || [];
+var subscribe = function (eventName, fn) {  
+    // if events[eventName] is not Null, Undefined nor empty, sets to himself
+    // if it is undefined (not existed yet) it gets created.
+    events[eventName] = events[eventName] || [];  
     events[eventName].push(fn);
 };
 
@@ -17,7 +19,7 @@ var unsubscribe = function(eventName, fn) {
     }
 };
 
-var publish = function (eventName, data) {
+var trigger = function (eventName, data) {
     if (events[eventName]) {
       events[eventName].forEach(function(fn) {
         fn(data);
@@ -29,5 +31,5 @@ var publish = function (eventName, data) {
 module.exports = {
     subscribe: subscribe,
     unsubscribe: unsubscribe,
-    publish: publish
+    trigger: trigger
 }

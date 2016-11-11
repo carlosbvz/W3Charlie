@@ -1,5 +1,2 @@
 - Get plumber to work with browserify.
-- Get this component oriented.
-- Update gulp watch.
-- Implement PubSub pattern
 - Implement handlebars

@@ -1,3 +1,5 @@
+'use strict';
+
 var gulp 	= require('gulp');
 var concat 	= require('gulp-concat');
 var uglify 	= require('gulp-uglify');
@@ -13,12 +15,32 @@ var serve 	= require('serve-static');
 var browsersync = require('browser-sync');
 var browserify = require('browserify');
 var source 	= require('vinyl-source-stream');
+var cleanCSS = require('gulp-clean-css');
+var sourcemaps = require('gulp-sourcemaps');
 
 gulp.task('styles',function(){
 	return 	gulp.src(config.css.src)
+			.pipe(plumber())  
+			.pipe(sourcemaps.init())
+			.pipe(concat('main.css'))
+			.pipe(sass({
+		      outputStyle: 'expanded',
+		        precision: 10,
+		        includePaths: ['.']
+		    }).on('error', sass.logError))
+		    .pipe(sourcemaps.write('./maps'))
+			.pipe(plumber.stop())
+			.pipe(gulp.dest(config.css.dest));
+});
+gulp.task('styles:prod',function(){
+	return 	gulp.src(config.css.src)
 			.pipe(plumber())
-			.pipe(concat('all.css'))
-			.pipe(sass())
+			.pipe(concat('main.css'))
+			.pipe(sass.sync({
+		      outputStyle: 'compressed',
+		        precision: 10,
+		        includePaths: ['.']
+		    }).on('error', sass.logError))
 			.pipe(plumber.stop())
 			.pipe(gulp.dest(config.css.dest));
 });

@@ -3,7 +3,7 @@ module.exports = {
 	dist: './dist',
 	css: {
 		src: './app/assets/styles/global.scss',
-		dest: './dist/assets/css',
+		dest: './dist/assets/styles',
 		watch: ['app/components/**/*.scss',
 				'app/assets/styles/*.scss',
 				'app/assets/styles/vendor/*.scss']
@@ -14,8 +14,8 @@ module.exports = {
 		watch: ['app/components/**/*.js','app/assets/scripts/core/*.js']
 	},
 	images: {
-		src: './app/img/*.*',
-		dest: './dist/assets/img',
-		watch: './app/img/*.*',
+		src: './app/assets/images/*',
+		dest: './dist/assets/images',
+		watch: './app/assets/images/*'
 	}
 }
