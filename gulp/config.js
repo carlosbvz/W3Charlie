@@ -12,7 +12,15 @@ module.exports = {
 	scripts: {
 		src: './app/assets/scripts/app.js',
 		dest: './dist/assets/scripts',
-		watch: ['app/components/**/*.js','app/assets/scripts/core/*.js']
+		watch: ['app/components/**/*.js',
+				'app/assets/scripts/core/*.js']
+	},
+	assemble: {
+		watch: [	'./app/components/**/*.hbs',
+				'./app/layouts/*.hbs',
+				'./app/pages/*.hbs',
+				'./app/pages/**/*.hbs'
+				]
 	},
 	images: {
 		src: './app/assets/images/*',

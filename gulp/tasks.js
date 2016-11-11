@@ -23,6 +23,8 @@ var notify = require('gulp-notify');
 var color = require('gulp-color');
 var assemble = require('assemble');
 var app = assemble();
+var extname  = require('gulp-extname');
+var _        = require('lodash');
 
 
 gulp.task('load',function(cb) {
@@ -115,15 +117,16 @@ gulp.task('serve', function(){
 gulp.task('browsersync', function(cb){
 	return browsersync({
 		server: {
-			baseDir: './'
+			baseDir: config.tmp
 		}
 	}, cb);
 });
 
-gulp.task('default',[[ ['styles','browserify','images'], 'browsersync' ]],function(){
+gulp.task('default',[[ ['styles','browserify','images','assemble'], 'browsersync' ]],function(){
 	gulp.watch(config.styles.watch,['styles',browsersync.reload]);
 	gulp.watch(config.scripts.watch, ['browserify',browsersync.reload]);
 	gulp.watch(config.images.watch, ['images',browsersync.reload]);
+	gulp.watch(config.assemble.watch, ['assemble',browsersync.reload]);
 });
 
 

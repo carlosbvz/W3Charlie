@@ -1,2 +1,24 @@
-<p>The Site</p>
-{{title}}
+---
+title: Index
+list: in-progress
+path: about
+slug: about
+pagetype: about displayPopup
+layout: default
+---
+
+<h3>Table of Contents</h3>
+<hr>
+<div class="toc__section">
+<h2 class="toc__heading2">Pages</h2>
+<ul class="toc__list">
+   
+    {{#pages}}
+                <li>
+                    <a href="{{this.data.path}}">
+                        {{this.data.title}}
+                    </a>
+                </li>
+    {{/pages}}
+</ul>
+</div>
