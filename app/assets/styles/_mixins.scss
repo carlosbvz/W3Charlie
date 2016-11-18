@@ -1,0 +1,34 @@
+// _mixins.scss
+// Please put your mixins here
+
+// CREATING MEDIA QUERY BREAKPOINTS ON-THE-FLY
+// https://coderwall.com/p/brz5-g
+@mixin respond-to($breakpoint) {
+    @media only screen and (min-width: $breakpoint) { @content; }
+}
+@mixin respond-range($breakpoint,$breakpoint2) {
+    @media only screen and (min-width: $breakpoint) and (max-width: $breakpoint2) { @content; }
+}
+@mixin respond-range-orient($orientation,$breakpoint,$breakpoint2) {
+    @media only screen and (min-width: $breakpoint) and (max-width: $breakpoint2) and (orientation : landscape) { @content; }
+}
+@mixin orient($orientation: landscape, $breakpoint: 320) {
+    @media only screen and (min-width: $breakpoint) and (orientation : $orientation) {
+        @content;
+    }
+}
+
+
+// ClearFix mixin
+@mixin clearfix() {
+    //zoom:1;
+    &:before, &:after {
+        content: "\0020";
+        display: block;
+        height: 0;
+        overflow: hidden;
+    }
+    &:after {
+        clear: both;
+    }
+}

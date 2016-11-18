@@ -1,12 +1,12 @@
-var pubsub = require('../../assets/scripts/core/pubsub.js');
+const pubsub = require('../../assets/scripts/core/pubsub.js');
 
 // bind events to DOM
-var bindEventsToUI = function() {
+const bindEventsToUI = () => {
 
 };
 
 // public interface
-var init = function() {
+const init = () => {
 	console.log('footer'); 
 	pubsub.trigger('peopleChanged', 3);
 	pubsub.trigger('peopleChanged', 4);

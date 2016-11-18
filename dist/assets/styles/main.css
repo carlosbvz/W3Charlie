@@ -371,8 +371,23 @@ table {
 \*------------------------------------*/
 /*------------------------------------*  	Components
 \*------------------------------------*/
-.header {
-  color: #444;
+header .progress__wrapper:before, header .progress__wrapper:after {
+  content: "\0020";
+  display: block;
+  height: 0;
+  overflow: hidden;
+}
+
+header .progress__wrapper:after {
+  clear: both;
+}
+
+@media only screen and (min-width: 768px) {
+  header .progress__wrapper #progress-ajax {
+    width: 100%;
+    float: right;
+    margin-top: 25px;
+  }
 }
 
 /*# sourceMappingURL=maps/main.css.map */

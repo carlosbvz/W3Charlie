@@ -1,3 +1,16 @@
-.header {
-	color: #444;
+header {
+
+
+	.progress__wrapper {
+		@include clearfix();
+		
+
+		@include respond-to($tablet) {
+			#progress-ajax {
+				width: 100%;
+				float: right;
+				margin-top: 25px;
+			}
+		}
+	}
 }

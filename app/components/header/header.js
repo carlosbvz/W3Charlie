@@ -1,18 +1,17 @@
-var pubsub = require('../../assets/scripts/core/pubsub.js');
+const pubsub = require('../../assets/scripts/core/pubsub.js');
 
 // bind events to DOM
-var bindEventsToUI = function() {
+const bindEventsToUI = function() {
 
 };
 
 // public interface
-var init = function() {
+const init = function() {
 	console.log('header');
-	pubsub.subscribe('peopleChanged', handler);
 };
 
-var handler = function(data) {
-	console.log('header triggered'+data);
+const handler = function(data) {
+	
 }
 
 
