@@ -390,4 +390,14 @@ header .progress__wrapper:after {
   }
 }
 
+.modal-url .input-url {
+  width: 80%;
+  float: left;
+  margin-right: 5px;
+}
+
+.modal-url .field-wrapper {
+  margin-bottom: 10px;
+}
+
 /*# sourceMappingURL=maps/main.css.map */
