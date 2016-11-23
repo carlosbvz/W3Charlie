@@ -10,9 +10,11 @@ module.exports = {
 	}, 
 	scripts: {
 		src: './app/assets/scripts/app.js',
+		vendor: './app/assets/scripts/vendor/*.js',
 		dest: './dist/assets/scripts',
 		watch: ['app/components/**/*.js',
-				'app/assets/scripts/core/*.js']
+				'app/assets/scripts/core/*.js',
+				'app/assets/scripts/vendor/*.js']
 	},
 	assemble: {
 		dest: './dist',

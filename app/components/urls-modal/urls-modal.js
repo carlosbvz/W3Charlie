@@ -33,7 +33,6 @@ let handleUrls = {
             // console.log(e)
             console.log(item.value)
         })
-        // console.log(urls);
     },
     areUrlsValid: () => true  // needs to add a real validation here
 
@@ -56,7 +55,7 @@ const bindEventsToUI = () => {
 
 // public interface
 const init = function() {
-    console.log('w3c-fetcher'); 
+    console.log('urls-modal'); 
     bindEventsToUI();
 };
 

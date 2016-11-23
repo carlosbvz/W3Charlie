@@ -1,4 +1,2 @@
 - Get plumber to work with browserify.
-- Implement handlebars data.
-- Understand sass precision and sass includePaths: ['.']
-- List pages in index
+- scripts gulp tasks is not running after browserify & vendor
