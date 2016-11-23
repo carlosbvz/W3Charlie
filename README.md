@@ -1,9 +1,16 @@
-# Gulp Practice
+# W3C validation tool (helper)
+
+## The idea
+
+When working with several pages in a site(s), it might be difficult to see how many errors & warining we have in each page, and which ones appears in more than one page. 
+This tool pretend to give a hand on that by sorting those errors.
+
+## Side effect (learning)
 
 This project helped to understand how modules works in js using browserify. 
 Also, this helped a lot when fixing w3c errors in several pages.
 
-Technologies I used: 
+## Technologies I used: 
 
 - Gulp
 - npm and yarn ( I just wanted to see if yarn was faster than npm, and yes it is :P )
