@@ -369,6 +369,39 @@ table {
 /*------------------------------------*  	Base (Global components used 
   	throughout the site)
 \*------------------------------------*/
+_parsley.scssinput.parsley-success,
+select.parsley-success,
+textarea.parsley-success {
+  color: #468847;
+  background-color: #DFF0D8;
+  border: 1px solid #D6E9C6;
+}
+
+input.parsley-error,
+select.parsley-error,
+textarea.parsley-error {
+  color: #B94A48;
+  background-color: #F2DEDE;
+  border: 1px solid #EED3D7;
+}
+
+.parsley-errors-list {
+  margin: 2px 0 3px;
+  padding: 0;
+  list-style-type: none;
+  font-size: 0.9em;
+  line-height: 0.9em;
+  opacity: 0;
+  transition: all .3s ease-in;
+  -o-transition: all .3s ease-in;
+  -moz-transition: all .3s ease-in;
+  -webkit-transition: all .3s ease-in;
+}
+
+.parsley-errors-list.filled {
+  opacity: 1;
+}
+
 /*------------------------------------*  	Components
 \*------------------------------------*/
 header .progress__wrapper:before, header .progress__wrapper:after {
@@ -403,13 +436,17 @@ footer .container .text-muted {
 }
 
 .modal-url .input-url {
-  width: 80%;
+  width: 90%;
   float: left;
   margin-right: 5px;
 }
 
 .modal-url .field-wrapper {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+.modal-url .errorBlock {
+  color: red;
 }
 
 /*# sourceMappingURL=maps/main.css.map */

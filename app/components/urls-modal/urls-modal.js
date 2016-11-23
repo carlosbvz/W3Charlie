@@ -1,69 +1,105 @@
 const pubsub = require('../../assets/scripts/core/pubsub.js');
 
 // Global Variables
-let modalUrl    = $('.modal-url');
-let btnAdd      = modalUrl.find('.btn-add-field');
-let btnSaveUlrs = modalUrl.find('.btn-save-url');
-let urlsSection = modalUrl.find('.input-append');
-let doc         = $(document);
+let modalUrl    = $('#urlModal'),
+    btnAdd      = modalUrl.find('.btn-add-field'),
+    btnSaveUlrs = modalUrl.find('.btn-save-url'),
+    btnCancelUrls= modalUrl.find('.btn-close-url'),
+    urlsSection = modalUrl.find('.input-append'),
+    savedInputs = urlsSection.html(),
+    doc         = $(document),
+    urls        = [],
+    urlModalTrigger = $('.url-modal-trigger'),
+    inputMarkup = `<div class="field-wrapper">
+                        <span class="errorBlock"></span>
+                        <input autocomplete="off" class="input-url form-control" placeholder="URL to test" type="text"
+                                required type="url" data-parsley-type="url">
+                        <a href="#" class="btn btn-danger remove-me" >
+                            -
+                        </a>
+                    </div>`; 
 
 
 let buttonsActions = {
     addField: () => {
-        let data = `<div class="field-wrapper">
-                        <input autocomplete="off" class="input-url form-control" placeholder="URL to test" type="text">
-                        <a href="#" class="btn btn-danger remove-me" >
-                            -
-                        </a>
-                    </div>`
-        urlsSection.append(data);
+        urlsSection.append(inputMarkup);
     },
     removeField: (item) => {
         item.parent().remove();
     },
     saveUrls: () => {
-        let urls = handleUrls.getUrlsFromForm();
-
+        urls = [];
+        urlsSection.find('.input-url').each((i,item) => {
+            urls.push($(item).val());
+        })
+        savedInputs = '';
+        console.log(savedInputs)
+        savedInputs = $('.input-append').html();
+    },
+    showModal: () => {
+        modalUrl.modal('show');
+    },
+    cancelModal: () => {
+        modalUrl.modal('hide');
+        console.log(savedInputs);
+        urlsSection.html('');
+        urlsSection.html(savedInputs);
     }
 };
-let handleUrls = {
 
-    getUrlsFromForm: () => {
-        urlsSection.find('.input-url').each((i,item) => {
-            // console.log(e)
-            console.log(item.value)
-        })
+const parsleyValidation =  {
+    form: $('#url-form'),
+    parsleyConf: {
+        errorsContainer: (pEle) => {
+            var $err = pEle.$element.siblings('.errorBlock');
+            return $err;
+        }
     },
-    areUrlsValid: () => true  // needs to add a real validation here
-
-}
-
+    init: () => {
+            parsleyValidation.form.parsley(parsleyValidation.parsleyConf)
+            .on('form:submit', () => {
+                return false; // Don't submit form 
+            })
+            .on('form:success', () => {
+                buttonsActions.saveUrls();
+                modalUrl.modal('hide');
+            });
+    }
+};
 
 // bind events to DOM
 const bindEventsToUI = () => {
-    btnAdd.on('click', (e) => {
+    doc.on('click', '.btn-add-field', (e) => {
         e.preventDefault();
         buttonsActions.addField();
+    });
+    btnCancelUrls.on('click', () => {
+        buttonsActions.cancelModal();
     });
     doc.on('click', '.remove-me', (e) => {
         buttonsActions.removeField($(e.target));
     });
-    btnSaveUlrs.on('click', (e) => {
-        buttonsActions.saveUrls();
+    urlModalTrigger.on('click', (e) => {
+        buttonsActions.showModal();
+    });
+    urlsSection.on('keyup', 'input', (e) => {
+        e.target.setAttribute("value", e.target.value); 
     })
+
 };
 
 // public interface
-const init = function() {
+const init = () => {
     console.log('urls-modal'); 
     bindEventsToUI();
+    parsleyValidation.init();
 };
 
 
 // export public interface
 module.exports = {
     init:init,
-    autoLunch: true
+    autoLunch: false
 };
 
 

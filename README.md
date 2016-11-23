@@ -14,7 +14,8 @@ Also, this helped a lot when fixing w3c errors in several pages.
 
 - Gulp
 - npm and yarn ( I just wanted to see if yarn was faster than npm, and yes it is :P )
-- Some ES6 functionallity ( I am getting into it)
+- Some ES6 functionallity ( I am getting into it).
+- Parsley.js 
 
 
 I also used some kind of controller (initializer) to run the js modules depending on two factors:

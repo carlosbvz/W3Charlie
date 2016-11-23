@@ -1,11 +1,14 @@
 // url modal
 .modal-url {
 	.input-url {
-		width: 80%;
+		width: 90%;
 		float: left;
 		margin-right: 5px; 
 	}
 	.field-wrapper {
-		margin-bottom: 10px;
+		margin-bottom: 15px;
+	}
+	.errorBlock {
+		color: red;
 	}
 }

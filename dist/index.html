@@ -30,10 +30,10 @@
 	<!-- ============================================
 	|  	.js
 	============================================= --> 
-	<script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<!-- Latest compiled and minified JavaScript -->
-	<script defer src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-	<script defer src="../assets/scripts/vendors-bundle.js"></script>
+	<script  src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script defer  src="../assets/scripts/vendors-bundle.js"></script>
 	<script defer src="../assets/scripts/custom-bundle.js"></script>
 </head>
 
@@ -50,7 +50,7 @@
 			<div class="row">
 			
 				<div class="col-md-3">
-					<h3><button class="btn btn-success btn-block" title="Click to change the urls to analize" data-toggle="modal" data-target="#urlModal">Load URLs</button></h3>
+					<h3><button class="btn btn-success url-modal-trigger btn-block" title="Click to change the urls to analize" >Load URLs</button></h3>
 				</div>
 			
 				<div class="col-md-3">
@@ -72,39 +72,49 @@
 	</div>
 </header><div class="wrapper">
 	<!-- Modal -->
-	<div class="modal modal-url fade" id="urlModal" tabindex="-1" role="dialog" aria-labelledby="urlModalLabel">
+	<div class="modal modal-url fade" id="urlModal" tabindex="-1" role="dialog" aria-labelledby="urlModalLabel" data-action-name="urlsModal">
 	  <div class="modal-dialog" role="document">
 	    <div class="modal-content">
 	      <div class="modal-header">
 	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 	        <h4 class="modal-title" id="urlModalLabel">URLs to validate</h4>
 	      </div>
-	      <div class="modal-body">
-	        
-				<input type="hidden" name="count" value="1" />
-		        <div class="control-group" id="fields">
-		            <label class="control-label" for="field1">Add the urls to validate here</label>
-		            <div class="controls" id="profs"> 
-		                <form class="input-append">
-								<div class="field-wrapper">
-		                    		<input autocomplete="off" class="input-url form-control" type="email" placeholder="URL to test" required />
-		                    		<button class="btn btn-add-field" type="button">+</button>
-		                    	</div>
-		                </form>
-		            <br>
-		            
-		            </div>
-		        </div>
 	
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-	        <button type="button" class="btn btn-primary btn-save-url">Save URLs</button>
-	      </div>
+	      	<form id="url-form"  data-parsley-validate="">
+		      	<div class="modal-body">
+		        
+					<input type="hidden" name="count" value="1" />
+			        <div class="control-group" id="fields">
+			            <p class="control-label" for="field1">Add the urls to validate here</p>
+		                <div class="input-append" >
+								<div class="field-wrapper">
+									<span class="errorBlock"></span>
+		                    		<input autocomplete="off" class="input-url form-control" placeholder="URL to test" name="email" required type="url" data-parsley-type="url"/>
+		                    		<button class="btn btn-default btn-add-field" type="button">+</button>
+		                    	</div>
+		                </div>
+		                
+			            <br>
+	
+			        </div>
+	
+		      	</div>
+		      	<div class="modal-footer">
+		        	<button type="button" class="btn btn-default btn-close-url">Cancel</button>
+		        	<button type="submit" class="btn btn-primary btn-save-url">Save Urls </button>
+		     	</div>
+	      	
+			</form>
 	    </div>
 	  </div>
 	</div>
 	<!-- ./ urls modal -->
+	
+	
+	
+	
+
+
 
 </div>
 <footer class="footer">
