@@ -206,8 +206,8 @@ let buttonsActions = {
     cancelModal: () => {
         modalUrl.modal('hide');
         console.log(savedInputs);
-        // urlsSection.html('');
-        // urlsSection.html(savedInputs);
+        urlsSection.html('');
+        urlsSection.html(savedInputs);
     }
 };
 

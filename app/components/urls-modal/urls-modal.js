@@ -29,11 +29,10 @@ let buttonsActions = {
     },
     saveUrls: () => {
         urls = [];
+        savedInputs = '';
         urlsSection.find('.input-url').each((i,item) => {
             urls.push($(item).val());
         })
-        savedInputs = '';
-        console.log(savedInputs)
         savedInputs = $('.input-append').html();
     },
     showModal: () => {
