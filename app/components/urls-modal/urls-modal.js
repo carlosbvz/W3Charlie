@@ -19,6 +19,9 @@ let modalUrl    = $('#urlModal'),
                         </a>
                     </div>`; 
 
+const getUrls = () => {
+    return urls;
+};
 
 let buttonsActions = {
     addField: () => {
@@ -98,6 +101,7 @@ const init = () => {
 // export public interface
 module.exports = {
     init:init,
+    getUrls: getUrls,
     autoLunch: false
 };
 

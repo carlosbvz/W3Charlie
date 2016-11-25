@@ -183,6 +183,9 @@ let modalUrl    = $('#urlModal'),
                         </a>
                     </div>`; 
 
+const getUrls = () => {
+    return urls;
+};
 
 let buttonsActions = {
     addField: () => {
@@ -193,11 +196,10 @@ let buttonsActions = {
     },
     saveUrls: () => {
         urls = [];
+        savedInputs = '';
         urlsSection.find('.input-url').each((i,item) => {
             urls.push($(item).val());
         })
-        savedInputs = '';
-        console.log(savedInputs)
         savedInputs = $('.input-append').html();
     },
     showModal: () => {
@@ -263,13 +265,15 @@ const init = () => {
 // export public interface
 module.exports = {
     init:init,
+    getUrls: getUrls,
     autoLunch: false
 };
 
 
 
 },{"../../assets/scripts/core/pubsub.js":4}],8:[function(require,module,exports){
-const pubsub = require('../../assets/scripts/core/pubsub.js');
+const pubsub 	= require('../../assets/scripts/core/pubsub.js');
+const urlsModal = require('../../components/urls-modal/urls-modal.js');
 
 
 // Variables
@@ -284,32 +288,10 @@ let fetcher = {
 	w3cURL: 'https://validator.w3.org/nu/?doc=',
 
 	clearUI: function() {
-		console.log('clearing UI');
 		this.ajaxCount = 0;
 	},
 	getUrls: function() {
-		this.urls = [
-		'http://ah.digitas.com/?x=1',
-		'http://ah.digitas.com/practice/athenaclinicals/her',
-		'http://ah.digitas.com/practice/athenaclinicals/emr',
-		'http://ah.digitas.com/practice/athenaclinicals/ehr-software-features',
-		'http://ah.digitas.com/practice/athenacollector/medical-billing',
-		'http://ah.digitas.com/practice/athenacollector/practice-management',
-		'http://ah.digitas.com/practice/athenacollector/medical-billing-software-features',
-		'http://ah.digitas.com/practice/athenacommunicator/patient-engagement',
-		'http://ah.digitas.com/practice/athenacommunicator/patient-portal',
-		'http://ah.digitas.com/practice/athenacommunicator/patient-portal-software',
-		'http://ah.digitas.com/practice/athenacoordinator/medical-order-transmission',
-		'http://ah.digitas.com/practice/athenatext/secure-text-messaging',
-		'http://ah.digitas.com/practice/epocrates/clinical-decision-support',
-		'http://ah.digitas.com/enterprise/athenaclinicals/ehr-systems',
-		'http://ah.digitas.com/enterprise/athenacollector/revenue-cycle-management',
-		'http://ah.digitas.com/enterprise/athenacoordinator/patient-access',
-		'http://ah.digitas.com/enterprise/athenacommunicator/population-health',
-		'http://ah.digitas.com/enterprise/epocrates/clinical-decision-support',
-		'http://ah.digitas.com/enterprise/accountable-care-organizations/accountable-care-organizations',
-		'http://ah.digitas.com/enterprise/academic-medical-centers/academic-medical-centers'
-		];
+		this.urls = urlsModal.getUrls();
 	},
 	getData: function() {
 		$(this.urls).each(function(i,url){
@@ -337,7 +319,6 @@ let fetcher = {
 		this.clearUI();
 		this.getUrls();
 		this.getData();
-		console.log(this.urls);
 	}
 }
 
@@ -355,14 +336,9 @@ const init = function() {
 	bindEventsToUI();
 };
 
-const handler = function(data) {
-	
-}
-
-
 // export public interface
 module.exports = {
 	init:init,
 	autoLunch: true
 };
-},{"../../assets/scripts/core/pubsub.js":4}]},{},[1]);
+},{"../../assets/scripts/core/pubsub.js":4,"../../components/urls-modal/urls-modal.js":7}]},{},[1]);
