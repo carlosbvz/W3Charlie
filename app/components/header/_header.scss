@@ -1,6 +1,8 @@
 header {
-
-
+	background: #064771;
+	color: white;
+	padding: 15px;
+	
 	.progress__wrapper {
 		@include clearfix();
 		
@@ -12,5 +14,8 @@ header {
 				margin-top: 25px;
 			}
 		}
+	}
+	#menu-toggle {
+		cursor: pointer;
 	}
 }

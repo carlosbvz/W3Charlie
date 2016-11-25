@@ -13,42 +13,46 @@ let fetcher = {
 	delayer: 1000, // Time between every hit to the w3c site
 	w3cURL: 'https://validator.w3.org/nu/?doc=',
 
-	clearUI: function() {
-		this.ajaxCount = 0;
+	clearUI: () => { 
+		fetcher.ajaxCount = 0;
 	},
-	getUrls: function() {
-		this.urls = urlsModal.getUrls();
+	getUrls: () => {
+		fetcher.urls = urlsModal.getUrls();
 	},
-	getData: function() {
-		$(this.urls).each(function(i,url){
-			setTimeout( function(){ 
-				let fetchingURL = fetcher.w3cURL+url;
-				$.ajax({ url: fetchingURL, success: function(htmlData) { 
-					fetcher.processData(htmlData,url);
-					this.ajaxCount++;
-				}});
-			},this.delayer);
-			this.delayer += 1500;
-		});
+	getData: () => {
+		if(fetcher.urls.length > 0 ) {
+			$(fetcher.urls).each(function(i,url){
+				setTimeout( function(){ 
+					let fetchingURL = fetcher.w3cURL+url;
+					$.ajax({ url: fetchingURL, success: function(htmlData) { 
+						fetcher.processData(htmlData,url);
+						fetcher.ajaxCount++;
+					}});
+				},fetcher.delayer);
+				fetcher.delayer += 1500;
+			});
+		} else {
+			// Show error msg
+		}
 	},
-	processData: function(htmlData,url) {
+	processData: (htmlData,url) => {
 		let errors   = $(htmlData).find('.error');
 		let warnings = $(htmlData).find('.warning');
-		this.w3cErrorsByPage.push({
+		fetcher.w3cErrorsByPage.push({
 			url: url,
 			errors: errors,
 			warnings: warnings
 		}); 
 	},
-	init: function() {
-		this.clearUI();
-		this.getUrls();
-		this.getData();
+	init: () => {
+		fetcher.clearUI();
+		fetcher.getUrls();
+		fetcher.getData();
 	}
 }
 
 // bind events to DOM
-const bindEventsToUI = function() {
+const bindEventsToUI = () => {
 	btnTrigger.click(function() {
 		fetcher.init();
 	})
@@ -56,7 +60,7 @@ const bindEventsToUI = function() {
 };
 
 // public interface
-const init = function() {
+const init = () => {
 	console.log('w3c-fetcher'); 
 	bindEventsToUI();
 };

@@ -33,95 +33,137 @@
 	<script  src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<!-- Latest compiled and minified JavaScript -->
 	<script  src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-	<script defer  src="../assets/scripts/vendors-bundle.js"></script>
+	<script defer src="../assets/scripts/vendors-bundle.js"></script>
 	<script defer src="../assets/scripts/custom-bundle.js"></script>
 </head>
 
 
 
 <body> 
-<header class="container-fluid" data-action-name="header">
-	<div class="row">
-		<div class="col-md-4">
-			<h3>W3Charlie</h3> 
-		</div>
 
-		<div class="col-md-8">
-			<div class="row">
-			
-				<div class="col-md-3">
-					<h3><button class="btn btn-success url-modal-trigger btn-block" title="Click to change the urls to analize" >Load URLs</button></h3>
-				</div>
-			
-				<div class="col-md-3">
-					<h3><a href="#" class="btn btn-primary btn-block btn-run-fetcher pull-right" title="Click to get all error and warnings">Run</a></h3>
-				</div>
-			
-				<div class="col-md-6">
-					<!-- progress bar -->
-							<div class="progress__wrapper" data-action="progressBar">
-								<div class="progress" id="progress-ajax">
-									<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em;width: 0%">
-										<span class="display">0%</span>
-									</div>
-								</div>
-							</div>
-							<!-- ./progress bar -->	</div>
-			</div>		</div>
-		
-	</div>
-</header><div class="wrapper">
-	<!-- Modal -->
-	<div class="modal modal-url fade" id="urlModal" tabindex="-1" role="dialog" aria-labelledby="urlModalLabel" data-action-name="urlsModal">
-	  <div class="modal-dialog" role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close btn-close-url" ><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title" id="urlModalLabel">URLs to validate</h4>
-	      </div>
-	
-	      	<form id="url-form"  data-parsley-validate="">
-		      	<div class="modal-body">
-		        
-					<input type="hidden" name="count" value="1" />
-			        <div class="control-group" id="fields">
-			            <p class="control-label" for="field1">Add the urls to validate here</p>
-		                <div class="input-append" >
-								<div class="field-wrapper">
-									<span class="errorBlock"></span>
-		                    		<input autocomplete="off" class="input-url form-control" placeholder="URL to test" name="email" required type="url" data-parsley-type="url"/>
-		                    		<button class="btn btn-default btn-add-field" type="button">+</button>
-		                    	</div>
-		                </div>
-		                
-			            <br>
-	
-			        </div>
-	
-		      	</div>
-		      	<div class="modal-footer">
-		        	<button type="button" class="btn btn-default btn-close-url">Cancel</button>
-		        	<button type="submit" class="btn btn-primary btn-save-url">Save Urls </button>
-		     	</div>
-	      	
-			</form>
-	    </div>
-	  </div>
-	</div>
-	<!-- ./ urls modal -->
-	
-	
-	
-	
+<!-- Modal -->
+<div class="modal modal-url fade" id="urlModal" tabindex="-1" role="dialog" aria-labelledby="urlModalLabel" data-action-name="urlsModal">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close btn-close-url" ><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="urlModalLabel">URLs to validate</h4>
+      </div>
 
+      	<form id="url-form"  data-parsley-validate="">
+	      	<div class="modal-body">
+	        
+				<input type="hidden" name="count" value="1" />
+		        <div class="control-group" id="fields">
+		            <p class="control-label" for="field1">Add the urls to validate here</p>
+	                <div class="input-append" >
+							<div class="field-wrapper">
+								<span class="errorBlock"></span>
+	                    		<input autocomplete="off" class="input-url form-control" placeholder="URL to test" name="email" required type="url" data-parsley-type="url"/>
+	                    		<button class="btn btn-default btn-add-field" type="button">+</button>
+	                    	</div>
+	                </div>
+	                
+		            <br>
 
+		        </div>
 
-</div>
-<footer class="footer">
-  <div class="container">
-    <p class="text-muted">W3C helping tool</p>
+	      	</div>
+	      	<div class="modal-footer">
+	        	<button type="button" class="btn btn-default btn-close-url">Cancel</button>
+	        	<button type="submit" class="btn btn-primary btn-save-url">Save Urls </button>
+	     	</div>
+      	
+		</form>
+    </div>
   </div>
-</footer>
+</div>
+<!-- ./ urls modal -->
+
+
+
+
+<div id="wrapper">
+    <div id="side-menu" data-action-name="rightPanel">
+    	<ul class="sidebar-nav">
+    		<li class="sidebar-brand">
+    			<a href="#">
+    				URLs to analyze
+    			</a>
+    		</li>
+    		<li>
+    			<input type="text" class="form-control">
+    		</li>
+    		<li>
+    			<a href="#">Shortcuts</a>
+    		</li>
+    		<li>
+    			<a href="#">Overview</a>
+    		</li>
+    		<li>
+    			<a href="#">Events</a>
+    		</li>
+    		<li>
+    			<a href="#">About</a>
+    		</li>
+    		<li>
+    			<a href="#">Services</a>
+    		</li>
+    		<li>
+    			<a href="#">Contact</a>
+    		</li>
+    	</ul>
+    </div>    <header class="container-fluid" data-action-name="header">
+    	<div class="row">
+    		<div class="col-md-6">
+    
+    			<h3 id="menu-toggle"><span class="glyphicon glyphicon-chevron-left" ></span> Hide URLs</h3> 
+    		</div>
+    
+    		<div class="col-md-6">
+    			<div class="row">
+    			
+    				<div class="col-md-3">
+    					<h3><button class="btn btn-success url-modal-trigger btn-block" title="Click to change the urls to analize" >Load URLs</button></h3>
+    				</div>
+    			
+    				<div class="col-md-3">
+    					<h3><a href="#" class="btn btn-primary btn-block btn-run-fetcher pull-right" title="Click to get all error and warnings">Run</a></h3>
+    				</div>
+    			
+    				<div class="col-md-6">
+    					<!-- progress bar -->
+    					<div class="progress__wrapper" data-action-name="progressBar">
+    						<div class="progress" id="progress-ajax">
+    							<div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em;width: 0%">
+    								<span class="display">0%</span>
+    							</div>
+    						</div>
+    					</div>
+    					<!-- ./progress bar -->	</div>
+    			</div>		</div>
+    		
+    	</div>
+    </header>
+    <div id="urls-section">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1>Simple Sidebar</h1>
+                    <p>This template has a responsive menu toggling system. The menu will appear collapsed on smaller screens, and will appear non-collapsed on larger screens. When toggled using the button below, the menu will appear/disappear. On small screens, the page content will be pushed off canvas.</p>
+                    <p>Make sure to keep all page content within the <code>#page-content-wrapper</code>.</p>
+                    <a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer class="footer">
+      <div class="container">
+        <p class="text-muted">W3C helping tool</p>
+      </div>
+    </footer></div>
+
 	
 </body>
 </html>

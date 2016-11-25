@@ -1,0 +1,10 @@
+#urls-section {
+    width: 100%;
+    position: absolute;
+    padding: 15px;
+
+    @include respond-to($tablet) {
+		padding: 20px;
+        position: relative;
+    }
+}

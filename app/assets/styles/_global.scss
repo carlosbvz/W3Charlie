@@ -1,0 +1,46 @@
+ body {
+    overflow-x: hidden;
+ }
+
+
+// Right panel toggle styles
+
+#wrapper {
+    padding-left: 0;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#wrapper.toggled {
+    padding-left: 350px;
+}
+
+#wrapper.toggled #side-menu {
+    width: 350px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+    position: absolute;
+    margin-right: -350px;
+}
+@include respond-to($tablet) {
+    #wrapper {
+        padding-left: 350px;
+    }
+
+    #wrapper.toggled {
+        padding-left: 0;
+    }
+
+    #wrapper.toggled #side-menu {
+        width: 0;
+    }
+
+
+    #wrapper.toggled #urls-section {
+        position: relative;
+        margin-right: 0;
+    }
+}

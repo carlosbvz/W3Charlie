@@ -369,6 +369,45 @@ table {
 /*------------------------------------*  	Base (Global components used 
   	throughout the site)
 \*------------------------------------*/
+body {
+  overflow-x: hidden;
+}
+
+#wrapper {
+  padding-left: 0;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+#wrapper.toggled {
+  padding-left: 350px;
+}
+
+#wrapper.toggled #side-menu {
+  width: 350px;
+}
+
+#wrapper.toggled #page-content-wrapper {
+  position: absolute;
+  margin-right: -350px;
+}
+
+@media only screen and (min-width: 768px) {
+  #wrapper {
+    padding-left: 350px;
+  }
+  #wrapper.toggled {
+    padding-left: 0;
+  }
+  #wrapper.toggled #side-menu {
+    width: 0;
+  }
+  #wrapper.toggled #urls-section {
+    position: relative;
+    margin-right: 0;
+  }
+}
+
 _parsley.scssinput.parsley-success,
 select.parsley-success,
 textarea.parsley-success {
@@ -404,6 +443,12 @@ textarea.parsley-error {
 
 /*------------------------------------*  	Components
 \*------------------------------------*/
+header {
+  background: #064771;
+  color: white;
+  padding: 15px;
+}
+
 header .progress__wrapper:before, header .progress__wrapper:after {
   content: "\0020";
   display: block;
@@ -421,6 +466,10 @@ header .progress__wrapper:after {
     float: right;
     margin-top: 25px;
   }
+}
+
+header #menu-toggle {
+  cursor: pointer;
 }
 
 footer {
@@ -447,6 +496,99 @@ footer .container .text-muted {
 
 .modal-url .errorBlock {
   color: red;
+}
+
+#side-menu {
+  z-index: 1000;
+  position: fixed;
+  left: 350px;
+  width: 0;
+  height: 100%;
+  margin-left: -350px;
+  overflow-y: auto;
+  background: #000;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  /* Sidebar Styles */
+}
+
+#side-menu .input-url {
+  width: 90%;
+  float: left;
+  margin-right: 5px;
+}
+
+#side-menu .field-wrapper {
+  margin-bottom: 15px;
+}
+
+#side-menu .errorBlock {
+  color: red;
+}
+
+#side-menu .sidebar-nav {
+  position: absolute;
+  top: 0;
+  width: 350px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#side-menu .sidebar-nav li {
+  text-indent: 20px;
+  line-height: 40px;
+}
+
+#side-menu .sidebar-nav li a {
+  display: block;
+  text-decoration: none;
+  color: #999999;
+}
+
+#side-menu .sidebar-nav li a:hover {
+  text-decoration: none;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+#side-menu .sidebar-nav li a:active,
+#side-menu .sidebar-nav li a:focus {
+  text-decoration: none;
+}
+
+#side-menu .sidebar-nav > .sidebar-brand {
+  height: 65px;
+  font-size: 18px;
+  line-height: 60px;
+}
+
+#side-menu .sidebar-nav > .sidebar-brand a {
+  color: #999999;
+}
+
+#side-menu .sidebar-nav > .sidebar-brand a:hover {
+  color: #fff;
+  background: none;
+}
+
+@media only screen and (min-width: 768px) {
+  #side-menu {
+    width: 350px;
+  }
+}
+
+#urls-section {
+  width: 100%;
+  position: absolute;
+  padding: 15px;
+}
+
+@media only screen and (min-width: 768px) {
+  #urls-section {
+    padding: 20px;
+    position: relative;
+  }
 }
 
 /*# sourceMappingURL=maps/main.css.map */

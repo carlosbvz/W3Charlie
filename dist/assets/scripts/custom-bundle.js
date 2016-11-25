@@ -53,14 +53,13 @@ module.exports = {
  	footer: 	require('../../../components/footer/footer.js'),
  	w3cFetcher: require('../../../components/w3c-fetcher/w3c-fetcher.js'),
  	urlsModal: 	require('../../../components/urls-modal/urls-modal.js'),
-
-
-
+ 	progressBar:require('../../../components/progress-bar/progress-bar.js'),
+ 	rightPanel: require('../../../components/side-menu/side-menu.js'),
 
 
 }
 
-},{"../../../components/footer/footer.js":5,"../../../components/header/header.js":6,"../../../components/urls-modal/urls-modal.js":7,"../../../components/w3c-fetcher/w3c-fetcher.js":8,"./pubsub.js":4}],4:[function(require,module,exports){
+},{"../../../components/footer/footer.js":5,"../../../components/header/header.js":6,"../../../components/progress-bar/progress-bar.js":7,"../../../components/side-menu/side-menu.js":8,"../../../components/urls-modal/urls-modal.js":9,"../../../components/w3c-fetcher/w3c-fetcher.js":10,"./pubsub.js":4}],4:[function(require,module,exports){
 
 var events = {};
 
@@ -145,6 +144,58 @@ module.exports = {
 },{"../../assets/scripts/core/pubsub.js":4}],7:[function(require,module,exports){
 const pubsub = require('../../assets/scripts/core/pubsub.js');
 
+// bind events to DOM
+const bindEventsToUI = () => {
+
+
+};
+
+// public interface
+const init = () => {
+    console.log('progress-bar'); 
+    bindEventsToUI();
+};
+
+
+// export public interface
+module.exports = {
+    init:init,
+    autoLunch: false
+};
+},{"../../assets/scripts/core/pubsub.js":4}],8:[function(require,module,exports){
+const pubsub = require('../../assets/scripts/core/pubsub.js');
+
+
+let $wrapper    = $("#wrapper")
+    $menuToggle = $("#menu-toggle")
+
+
+// bind events to DOM
+const bindEventsToUI = () => {
+    $menuToggle.click(function(e) {
+        e.preventDefault();
+        $wrapper.toggleClass("toggled");
+    });
+};
+
+// public interface
+const init = () => {
+    console.log('left-panel'); 
+    bindEventsToUI();
+};
+
+
+// export public interface
+module.exports = {
+    init:init,
+    autoLunch: false
+};
+
+
+
+},{"../../assets/scripts/core/pubsub.js":4}],9:[function(require,module,exports){
+const pubsub = require('../../assets/scripts/core/pubsub.js');
+
 // Global Variables
 let modalUrl    = $('#urlModal'),
     btnAdd      = modalUrl.find('.btn-add-field'),
@@ -169,8 +220,9 @@ const getUrls = () => {
 };
 
 let buttonsActions = {
-    addField: () => {
-        urlsSection.append(inputMarkup);
+    addField: (element) => {
+        console.log(element)
+        $(element).closest('.input-append').append(inputMarkup);
     },
     removeField: (item) => {
         item.parent().remove();
@@ -188,7 +240,6 @@ let buttonsActions = {
     },
     cancelModal: () => {
         modalUrl.modal('hide');
-        console.log(savedInputs);
         urlsSection.html('');
         urlsSection.html(savedInputs);
     }
@@ -218,7 +269,7 @@ const parsleyValidation =  {
 const bindEventsToUI = () => {
     doc.on('click', '.btn-add-field', (e) => {
         e.preventDefault();
-        buttonsActions.addField();
+        buttonsActions.addField(e.target);
     });
     btnCancelUrls.on('click', () => {
         buttonsActions.cancelModal();
@@ -252,7 +303,7 @@ module.exports = {
 
 
 
-},{"../../assets/scripts/core/pubsub.js":4}],8:[function(require,module,exports){
+},{"../../assets/scripts/core/pubsub.js":4}],10:[function(require,module,exports){
 const pubsub 	= require('../../assets/scripts/core/pubsub.js');
 const urlsModal = require('../../components/urls-modal/urls-modal.js');
 
@@ -268,42 +319,46 @@ let fetcher = {
 	delayer: 1000, // Time between every hit to the w3c site
 	w3cURL: 'https://validator.w3.org/nu/?doc=',
 
-	clearUI: function() {
-		this.ajaxCount = 0;
+	clearUI: () => { 
+		fetcher.ajaxCount = 0;
 	},
-	getUrls: function() {
-		this.urls = urlsModal.getUrls();
+	getUrls: () => {
+		fetcher.urls = urlsModal.getUrls();
 	},
-	getData: function() {
-		$(this.urls).each(function(i,url){
-			setTimeout( function(){ 
-				let fetchingURL = fetcher.w3cURL+url;
-				$.ajax({ url: fetchingURL, success: function(htmlData) { 
-					fetcher.processData(htmlData,url);
-					this.ajaxCount++;
-				}});
-			},this.delayer);
-			this.delayer += 1500;
-		});
+	getData: () => {
+		if(fetcher.urls.length > 0 ) {
+			$(fetcher.urls).each(function(i,url){
+				setTimeout( function(){ 
+					let fetchingURL = fetcher.w3cURL+url;
+					$.ajax({ url: fetchingURL, success: function(htmlData) { 
+						fetcher.processData(htmlData,url);
+						fetcher.ajaxCount++;
+					}});
+				},fetcher.delayer);
+				fetcher.delayer += 1500;
+			});
+		} else {
+			// Show error msg
+		}
 	},
-	processData: function(htmlData,url) {
+	processData: (htmlData,url) => {
 		let errors   = $(htmlData).find('.error');
 		let warnings = $(htmlData).find('.warning');
-		this.w3cErrorsByPage.push({
+		fetcher.w3cErrorsByPage.push({
 			url: url,
 			errors: errors,
 			warnings: warnings
 		}); 
 	},
-	init: function() {
-		this.clearUI();
-		this.getUrls();
-		this.getData();
+	init: () => {
+		fetcher.clearUI();
+		fetcher.getUrls();
+		fetcher.getData();
 	}
 }
 
 // bind events to DOM
-const bindEventsToUI = function() {
+const bindEventsToUI = () => {
 	btnTrigger.click(function() {
 		fetcher.init();
 	})
@@ -311,7 +366,7 @@ const bindEventsToUI = function() {
 };
 
 // public interface
-const init = function() {
+const init = () => {
 	console.log('w3c-fetcher'); 
 	bindEventsToUI();
 };
@@ -321,4 +376,4 @@ module.exports = {
 	init:init,
 	autoLunch: true
 };
-},{"../../assets/scripts/core/pubsub.js":4,"../../components/urls-modal/urls-modal.js":7}]},{},[1]);
+},{"../../assets/scripts/core/pubsub.js":4,"../../components/urls-modal/urls-modal.js":9}]},{},[1]);

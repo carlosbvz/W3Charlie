@@ -24,8 +24,9 @@ const getUrls = () => {
 };
 
 let buttonsActions = {
-    addField: () => {
-        urlsSection.append(inputMarkup);
+    addField: (element) => {
+        console.log(element)
+        $(element).closest('.input-append').append(inputMarkup);
     },
     removeField: (item) => {
         item.parent().remove();
@@ -43,7 +44,6 @@ let buttonsActions = {
     },
     cancelModal: () => {
         modalUrl.modal('hide');
-        console.log(savedInputs);
         urlsSection.html('');
         urlsSection.html(savedInputs);
     }
@@ -73,7 +73,7 @@ const parsleyValidation =  {
 const bindEventsToUI = () => {
     doc.on('click', '.btn-add-field', (e) => {
         e.preventDefault();
-        buttonsActions.addField();
+        buttonsActions.addField(e.target);
     });
     btnCancelUrls.on('click', () => {
         buttonsActions.cancelModal();
