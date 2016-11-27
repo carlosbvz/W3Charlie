@@ -532,6 +532,20 @@ footer .container .text-muted {
   border-bottom: 2px solid #ff6e6e;
 }
 
+.side-menu .input-url.parsley-success {
+  border-bottom: 2px solid #57b257;
+}
+
+.side-menu .input-url::-moz-placeholder {
+  /* Firefox 19+ */
+  color: white;
+}
+
+.side-menu .input-url::-webkit-input-placeholder {
+  /* Firefox 19+ */
+  color: white;
+}
+
 .side-menu .parsley-errors-list li {
   position: relative;
   top: 5px;

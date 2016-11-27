@@ -9,6 +9,7 @@ let btnTrigger = $('.btn-run-fetcher');
 let fetcher = {
 	urls: [],
 	w3cErrorsByPage: [],
+	$sideMenuSection: $('.side-menu'),
 	ajaxCount: 0,
 	delayer: 1000, // Time between every hit to the w3c site
 	w3cURL: 'https://validator.w3.org/nu/?doc=',
@@ -17,7 +18,11 @@ let fetcher = {
 		fetcher.ajaxCount = 0;
 	},
 	getUrls: () => {
-		fetcher.urls = urlsModal.getUrls();
+		fetcher.urls = [];
+		fetcher.$sideMenuSection.find('.input-url').each((i,item) => {
+            fetcher.urls.push($(item).val());
+        })
+        console.log(fetcher.urls)
 	},
 	getData: () => {
 		if(fetcher.urls.length > 0 ) {
@@ -51,18 +56,35 @@ let fetcher = {
 	}
 }
 
+const parsleyValidation =  {
+    form: $('#url-form2'),
+    parsleyConf: {
+        errorsContainer: (pEle) => {
+            var $err = pEle.$element.siblings('.errorBlock');
+            return $err;
+        }
+    },
+    init: () => {
+            parsleyValidation.form.parsley()
+            .on('form:submit', () => {
+                return false; // Don't submit form 
+            })
+            .on('form:success', () => {
+                fetcher.init();
+            });
+    }
+};
+
 // bind events to DOM
 const bindEventsToUI = () => {
-	btnTrigger.click(function() {
-		fetcher.init();
-	})
-
+	
 };
 
 // public interface
 const init = () => {
 	console.log('w3c-fetcher'); 
 	bindEventsToUI();
+	parsleyValidation.init();
 };
 
 // export public interface

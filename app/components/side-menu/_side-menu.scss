@@ -24,6 +24,15 @@
 		&.parsley-error{
 			border-bottom: 2px solid #ff6e6e;
 		}
+		&.parsley-success {
+			border-bottom: 2px solid #57b257;
+		}
+		&::-moz-placeholder {  /* Firefox 19+ */
+		   color: white;  
+		}
+		&::-webkit-input-placeholder {  /* Firefox 19+ */
+		   color: white;  
+		}
 	}
 
 	.parsley-errors-list li {
