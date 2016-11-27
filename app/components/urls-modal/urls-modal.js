@@ -26,7 +26,7 @@ const getUrls = () => {
 let buttonsActions = {
     addField: (element) => {
         console.log(element)
-        $(element).closest('.input-append').append(inputMarkup);
+        $(element).next('.input-append').append(inputMarkup);
     },
     removeField: (item) => {
         item.parent().remove();
@@ -71,10 +71,7 @@ const parsleyValidation =  {
 
 // bind events to DOM
 const bindEventsToUI = () => {
-    doc.on('click', '.btn-add-field', (e) => {
-        e.preventDefault();
-        buttonsActions.addField(e.target);
-    });
+    
     btnCancelUrls.on('click', () => {
         buttonsActions.cancelModal();
     });

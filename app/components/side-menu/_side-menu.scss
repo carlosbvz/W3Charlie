@@ -1,4 +1,4 @@
-#side-menu {
+.side-menu {
     z-index: 1000;
     position: fixed;
     left: 350px;
@@ -6,18 +6,52 @@
     height: 100%;
     margin-left: -350px;
     overflow-y: auto;
-    background: #000;
+    background: #333;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
+    color: white;
     .input-url {
-		width: 90%;
-		float: left;
 		margin-right: 5px; 
+		border: 0px;
+		border-bottom: 2px solid #2196f3;
+		border-radius: 0px;
+		background: transparent;
+		color: white;
+		box-shadow: none;
+
+		&.parsley-error{
+			border-bottom: 2px solid #ff6e6e;
+		}
+	}
+
+	.parsley-errors-list li {
+		position: relative;
+		top: 5px;
+		color: #ff6e6e;
+	}
+	&__buttons {
+		margin-bottom: 15px;
+	}
+	.input-url:focus {
+		box-shadow: none;
+	}
+	.remove-me {
+		float: right;
+	}
+	.remove-me:hover {
+		color: #337ab7;
+	}
+	&__wrapper {
+		padding: 15px;
 	}
 	.field-wrapper {
-		margin-bottom: 15px;
+		@include clearfix();
+		margin-bottom: 5px;
+	}
+	.field-wrapper:first-child {
+		margin-bottom: 20px;
 	}
 	.errorBlock {
 		color: red;

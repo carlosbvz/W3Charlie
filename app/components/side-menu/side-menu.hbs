@@ -1,30 +1,25 @@
-<div id="side-menu" data-action-name="rightPanel">
-	<ul class="sidebar-nav">
-		<li class="sidebar-brand">
-			<a href="#">
-				URLs to analyze
-			</a>
-		</li>
-		<li>
-			<input type="text" class="form-control">
-		</li>
-		<li>
-			<a href="#">Shortcuts</a>
-		</li>
-		<li>
-			<a href="#">Overview</a>
-		</li>
-		<li>
-			<a href="#">Events</a>
-		</li>
-		<li>
-			<a href="#">About</a>
-		</li>
-		<li>
-			<a href="#">Services</a>
-		</li>
-		<li>
-			<a href="#">Contact</a>
-		</li>
-	</ul>
+<div class="side-menu" data-action-name="rightPanel">
+	<div class="side-menu__wrapper">
+		
+		<form id="url-form2"  data-parsley-validate="">
+
+			<div class="row side-menu__buttons">
+				<div class="col-md-6">
+					<button class=" btn btn-success btn-block btn-add-field" type="button"> + Add URL</button>
+				</div>
+				<div class="col-md-6">
+		    		<button type="submit" class="btn btn-primary btn-block">Run</button>
+				</div>
+			</div>
+			
+		         
+		    <div class="input-append" data-parsley-validate="">
+					<div class="field-wrapper">
+						<span class="errorBlock"></span>
+		        		<input autocomplete="off" class="input-url form-control" placeholder="URL to test" required type="url" data-parsley-type="url"/>
+		        	</div>
+		    </div>
+	    </form>
+
+	</div>
 </div>
