@@ -452,6 +452,8 @@ header {
   background: #064771;
   color: white;
   padding: 15px;
+  width: auto;
+  z-index: 1;
 }
 
 header .progress__wrapper:before, header .progress__wrapper:after {
@@ -651,6 +653,24 @@ footer .container .text-muted {
   width: 100%;
   position: absolute;
   padding: 15px;
+}
+
+#urls-section .badge {
+  font-weight: normal;
+}
+
+#urls-section .badge-danger {
+  background-image: -webkit-linear-gradient(top, #d9534f 0, #c12e2a 100%);
+  background-image: linear-gradient(to bottom, #d9534f 0, #c12e2a 100%);
+}
+
+#urls-section .badge-warning {
+  background-image: -webkit-linear-gradient(top, #f0ad4e 0, #eb9316 100%);
+  background-image: linear-gradient(to bottom, #f0ad4e 0, #eb9316 100%);
+}
+
+#urls-section .panel-default a.collapsed {
+  font-size: 14px;
 }
 
 @media only screen and (min-width: 768px) {

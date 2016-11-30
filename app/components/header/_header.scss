@@ -2,6 +2,9 @@ header {
 	background: #064771;
 	color: white;
 	padding: 15px;
+	// position: fixed;
+	width: auto;
+	z-index: 1;
 	
 	.progress__wrapper {
 		@include clearfix();

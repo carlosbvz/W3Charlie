@@ -101,6 +101,7 @@ var unsubscribe = function(eventName, fn) {
 };
 
 var trigger = function (eventName, data) {
+  console.log(data)
     if (events[eventName]) {
       events[eventName].forEach(function(fn) {
         fn(data);
@@ -126,9 +127,7 @@ const bindEventsToUI = () => {
 // public interface
 const init = () => {
 	console.log('footer'); 
-	pubsub.trigger('peopleChanged', 3);
-	pubsub.trigger('peopleChanged', 4);
-	pubsub.trigger('peopleChanged', 5);
+	// pubsub.trigger('peopleChanged', 3);
 };
 
 
@@ -163,6 +162,15 @@ module.exports = {
 },{"../../assets/scripts/core/pubsub.js":4}],7:[function(require,module,exports){
 const pubsub = require('../../assets/scripts/core/pubsub.js');
 
+let $progressBar = $('.progress-bar'),
+	$display 	 = $progressBar.find('.display');
+
+
+const updateBar = (progress) => {
+	$progressBar.css('width',progress);
+	$display.html(progress);
+};
+
 // bind events to DOM
 const bindEventsToUI = () => {
 
@@ -173,6 +181,7 @@ const bindEventsToUI = () => {
 const init = () => {
     console.log('progress-bar'); 
     bindEventsToUI();
+    pubsub.subscribe('updateProgressBar', updateBar);
 };
 
 
@@ -343,10 +352,11 @@ const urlsModal = require('../../components/urls-modal/urls-modal.js');
 
 
 // Variables
-let btnTrigger = $('.btn-run-fetcher');
+const btnTrigger = $('.btn-run-fetcher');
+const $dataPagesSection = $('.w3c-data-pages');
 
 
-let fetcher = {
+const fetcher = {
 	urls: [],
 	w3cErrorsByPage: [],
 	$sideMenuSection: $('.side-menu'),
@@ -356,22 +366,25 @@ let fetcher = {
 
 	clearUI: () => { 
 		fetcher.ajaxCount = 0;
+		$dataPagesSection.html('');
+		render.updateProgressBar('0%');
 	},
 	getUrls: () => {
+		fetcher.urls = [];
 		fetcher.$sideMenuSection.find('.input-url').each((i,item) => {
             fetcher.urls.push($(item).val());
         })
-        console.log(fetcher.urls)
 	},
 	getData: () => {
-		console.log('getData')
 		if(fetcher.urls.length > 0 ) {
 			$(fetcher.urls).each(function(i,url){
 				setTimeout( function(){ 
 					let fetchingURL = fetcher.w3cURL+url;
 					$.ajax({ url: fetchingURL, success: function(htmlData) { 
-						fetcher.processData(htmlData,url);
+						render.byPage(htmlData, url);
 						fetcher.ajaxCount++;
+						let progress = (fetcher.ajaxCount*100)/fetcher.urls.length;
+						render.updateProgressBar(progress+'%');
 					}});
 				},fetcher.delayer);
 				fetcher.delayer += 1500;
@@ -380,19 +393,64 @@ let fetcher = {
 			// Show error msg
 		}
 	},
-	processData: (htmlData,url) => {
-		let errors   = $(htmlData).find('.error');
-		let warnings = $(htmlData).find('.warning');
-		fetcher.w3cErrorsByPage.push({
-			url: url,
-			errors: errors,
-			warnings: warnings
-		}); 
-	},
 	init: () => {
 		fetcher.clearUI();
 		fetcher.getUrls();
 		fetcher.getData();
+	}
+}
+
+const render = {
+	
+
+	byPage: (htmlData,url) => {
+		let id = makeid(),
+			errors = $(htmlData).find('.error'),
+			warnings = $(htmlData).find('.warning');
+
+		let  data = `
+			<div class="panel panel-default "> 						
+			    <div class="panel-heading" role="tab" id="headingTwo"> 			
+			      <p class="panel-title" role="button" data-toggle="collapse"	
+			        data-parent="#accordion-pages" href="#`+id+`" 				
+			        aria-expanded="false" aria-controls="`+id+`"> 									
+			        <a class="collapsed" > 			
+			        	`+ url +` 	 								
+			        </a> 
+			        <span class="badge badge-danger">Errors: `+errors.length+`</span>
+			        <span class="badge badge-warning">Warnings: `+warnings.length+`</span>																
+			      </p> 														
+			    </div>	
+
+			    <div id="`+id+`" class="panel-collapse collapse" 			
+			    role="tabpanel" aria-labelledby="headingTwo"> 					
+			      <div class="panel-body"> 	
+			      	<div class="panel__errors">
+			      		<ul>
+			         		`+ render.issues(errors)+`
+			         	</ul>
+			         </div>	
+			         <div class="panel__warnings">
+			         	<ul>
+			         		`+ render.issues(warnings)+`
+			         	</ul>
+			         </div>									
+			      </div> 														
+			    </div> 															
+			  </div> 															
+			</div>`;
+		$dataPagesSection.append(data)
+	},
+	issues: (errors) => {
+		let data = '';
+		$(errors).each(function(i,item){
+			data += '<li>'+$(item).html()+'</li><hr>';
+		});
+		return data;
+	},
+	updateProgressBar: (progress) => {
+
+		pubsub.trigger('updateProgressBar', progress);
 	}
 }
 
@@ -413,6 +471,16 @@ const parsleyValidation =  {
                 fetcher.init();
             });
     }
+};
+
+const makeid = () => {
+    let text = "";
+     	possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
+    for( let i=0; i < 55; i++ )
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+    return text;
 };
 
 // bind events to DOM

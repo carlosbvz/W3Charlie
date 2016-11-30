@@ -8,9 +8,7 @@ const bindEventsToUI = () => {
 // public interface
 const init = () => {
 	console.log('footer'); 
-	pubsub.trigger('peopleChanged', 3);
-	pubsub.trigger('peopleChanged', 4);
-	pubsub.trigger('peopleChanged', 5);
+	// pubsub.trigger('peopleChanged', 3);
 };
 
 

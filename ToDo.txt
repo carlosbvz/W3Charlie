@@ -1,2 +1,3 @@
 - Get plumber to work with browserify.
 - scripts gulp tasks is not running after browserify & vendor  (concat them to have one script call on index.html)
+- Make header fixed.

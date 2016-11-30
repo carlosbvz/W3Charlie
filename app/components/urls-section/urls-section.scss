@@ -2,6 +2,23 @@
     width: 100%;
     position: absolute;
     padding: 15px;
+    .badge {
+		font-weight: normal;
+		&-danger {
+			background-image: linear-gradient(to bottom,#d9534f 0,#c12e2a 100%);
+		}
+		&-warning {
+			background-image: linear-gradient(to bottom,#f0ad4e 0,#eb9316 100%);
+		}
+	}
+
+	.panel {
+		&-default {
+			a.collapsed {
+				font-size: 14px;
+			}
+		}
+	}
 
     @include respond-to($tablet) {
 		padding: 20px;
