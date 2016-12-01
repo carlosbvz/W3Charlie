@@ -352,7 +352,7 @@ const urlsModal = require('../../components/urls-modal/urls-modal.js');
 
 
 // Variables
-const btnTrigger = $('.btn-run-fetcher');
+const $btnTrigger = $('.btn-run-fetcher');
 const $dataPagesSection = $('.w3c-data-pages');
 
 
@@ -394,6 +394,7 @@ const fetcher = {
 		}
 	},
 	init: () => {
+		render.disableRunBtn();
 		fetcher.clearUI();
 		fetcher.getUrls();
 		fetcher.getData();
@@ -401,8 +402,6 @@ const fetcher = {
 }
 
 const render = {
-	
-
 	byPage: (htmlData,url) => {
 		let id = makeid(),
 			errors = $(htmlData).find('.error'),
@@ -441,9 +440,9 @@ const render = {
 			</div>`;
 		$dataPagesSection.append(data)
 	},
-	issues: (errors) => {
+	issues: (list) => {
 		let data = '';
-		$(errors).each(function(i,item){
+		$(list).each(function(i,item){
 			data += '<li>'+$(item).html()+'</li><hr>';
 		});
 		return data;
@@ -451,6 +450,9 @@ const render = {
 	updateProgressBar: (progress) => {
 
 		pubsub.trigger('updateProgressBar', progress);
+	},
+	disableRunBtn: () => {
+		$btnTrigger.button('loading');
 	}
 }
 

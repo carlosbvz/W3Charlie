@@ -3,7 +3,7 @@ const urlsModal = require('../../components/urls-modal/urls-modal.js');
 
 
 // Variables
-const btnTrigger = $('.btn-run-fetcher');
+const $btnTrigger = $('.btn-run-fetcher');
 const $dataPagesSection = $('.w3c-data-pages');
 
 
@@ -36,6 +36,9 @@ const fetcher = {
 						fetcher.ajaxCount++;
 						let progress = (fetcher.ajaxCount*100)/fetcher.urls.length;
 						render.updateProgressBar(progress+'%');
+						if(fetcher.ajaxCount === fetcher.urls.length ) { // ajax is done
+							render.enableRunBtn();
+						}
 					}});
 				},fetcher.delayer);
 				fetcher.delayer += 1500;
@@ -45,6 +48,7 @@ const fetcher = {
 		}
 	},
 	init: () => {
+		render.disableRunBtn();
 		fetcher.clearUI();
 		fetcher.getUrls();
 		fetcher.getData();
@@ -52,8 +56,6 @@ const fetcher = {
 }
 
 const render = {
-	
-
 	byPage: (htmlData,url) => {
 		let id = makeid(),
 			errors = $(htmlData).find('.error'),
@@ -102,6 +104,12 @@ const render = {
 	updateProgressBar: (progress) => {
 
 		pubsub.trigger('updateProgressBar', progress);
+	},
+	disableRunBtn: () => {
+		$btnTrigger.button('loading');
+	},
+	enableRunBtn: () => {
+		$btnTrigger.button('reset');
 	}
 }
 
