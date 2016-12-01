@@ -20,7 +20,6 @@ var unsubscribe = function(eventName, fn) {
 };
 
 var trigger = function (eventName, data) {
-  console.log(data)
     if (events[eventName]) {
       events[eventName].forEach(function(fn) {
         fn(data);

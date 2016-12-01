@@ -14,8 +14,14 @@
 
 	.panel {
 		&-default {
+			// border-color: transparent;
+			// box-shadow: none;
 			a.collapsed {
 				font-size: 14px;
+			}
+			.panel-heading {
+				// background-color: transparent;
+				// background-image: none;
 			}
 		}
 	}

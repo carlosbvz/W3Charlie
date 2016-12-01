@@ -101,7 +101,6 @@ var unsubscribe = function(eventName, fn) {
 };
 
 var trigger = function (eventName, data) {
-  console.log(data)
     if (events[eventName]) {
       events[eventName].forEach(function(fn) {
         fn(data);
@@ -351,23 +350,23 @@ const pubsub 	= require('../../assets/scripts/core/pubsub.js');
 const urlsModal = require('../../components/urls-modal/urls-modal.js');
 
 
-// Variables
-const $btnTrigger = $('.btn-run-fetcher');
-const $dataPagesSection = $('.w3c-data-pages');
+// globlas
+const 	$btnTrigger 		= $('.btn-run-fetcher'),
+ 		$dataPagesSection 	= $('.w3c-data-pages');
+
+let 	w3cErrorsByPage		= [];
 
 
 const fetcher = {
 	urls: [],
-	w3cErrorsByPage: [],
 	$sideMenuSection: $('.side-menu'),
 	ajaxCount: 0,
 	delayer: 1000, // Time between every hit to the w3c site
 	w3cURL: 'https://validator.w3.org/nu/?doc=',
 
-	clearUI: () => { 
+	clearData: () => { 
 		fetcher.ajaxCount = 0;
-		$dataPagesSection.html('');
-		render.updateProgressBar('0%');
+		w3cErrorsByPage = [];
 	},
 	getUrls: () => {
 		fetcher.urls = [];
@@ -381,10 +380,21 @@ const fetcher = {
 				setTimeout( function(){ 
 					let fetchingURL = fetcher.w3cURL+url;
 					$.ajax({ url: fetchingURL, success: function(htmlData) { 
-						render.byPage(htmlData, url);
 						fetcher.ajaxCount++;
-						let progress = (fetcher.ajaxCount*100)/fetcher.urls.length;
+						let errors 		= $(htmlData).find('.error'),
+							warnings 	= $(htmlData).find('.warning'),
+							progress 	= (fetcher.ajaxCount*100)/fetcher.urls.length;
+						fetcher.saveData(errors, warnings, url);
+						render.byPage(errors, warnings, url);
 						render.updateProgressBar(progress+'%');
+						render.updateTotals(
+							w3cErrorsByPage.map((item) => item.errors.length).reduce((a,b) => a+b , 0),
+							w3cErrorsByPage.map((item) => item.warnings.length).reduce((a,b) => a+b , 0)
+						);
+						if(fetcher.ajaxCount === fetcher.urls.length ) { // all ajax calls are done
+							render.enableRunBtn();
+
+						}
 					}});
 				},fetcher.delayer);
 				fetcher.delayer += 1500;
@@ -393,51 +403,67 @@ const fetcher = {
 			// Show error msg
 		}
 	},
+	saveData: (errors, warnings, url) => {
+		w3cErrorsByPage.push({
+			url: url,
+			errors: errors,
+			warnings: warnings
+		}); 
+	},
 	init: () => {
 		render.disableRunBtn();
-		fetcher.clearUI();
+		render.clearUI();
+		fetcher.clearData();
 		fetcher.getUrls();
 		fetcher.getData();
 	}
 }
 
 const render = {
-	byPage: (htmlData,url) => {
-		let id = makeid(),
-			errors = $(htmlData).find('.error'),
-			warnings = $(htmlData).find('.warning');
 
-		let  data = `
-			<div class="panel panel-default "> 						
-			    <div class="panel-heading" role="tab" id="headingTwo"> 			
-			      <p class="panel-title" role="button" data-toggle="collapse"	
-			        data-parent="#accordion-pages" href="#`+id+`" 				
-			        aria-expanded="false" aria-controls="`+id+`"> 									
-			        <a class="collapsed" > 			
-			        	`+ url +` 	 								
-			        </a> 
-			        <span class="badge badge-danger">Errors: `+errors.length+`</span>
-			        <span class="badge badge-warning">Warnings: `+warnings.length+`</span>																
-			      </p> 														
-			    </div>	
+ 	$totalErrors: 	$('.total-errors'),
+ 	$totalWarnings: $('.total-warnings'),
 
-			    <div id="`+id+`" class="panel-collapse collapse" 			
-			    role="tabpanel" aria-labelledby="headingTwo"> 					
-			      <div class="panel-body"> 	
-			      	<div class="panel__errors">
-			      		<ul>
-			         		`+ render.issues(errors)+`
-			         	</ul>
-			         </div>	
-			         <div class="panel__warnings">
-			         	<ul>
-			         		`+ render.issues(warnings)+`
-			         	</ul>
-			         </div>									
-			      </div> 														
-			    </div> 															
-			  </div> 															
-			</div>`;
+ 	clearUI: () => {
+		$dataPagesSection.html('');
+		render.updateProgressBar('0%');
+		render.$totalErrors.html(0);
+		render.$totalWarnings.html(0);
+ 	},
+
+	byPage: (errors, warnings, url) => {
+		let id 			= makeid(),
+		  	data	 	= `
+				<div class="panel panel-default "> 						
+				    <div class="panel-heading" role="tab" id="headingTwo"> 			
+				      <p class="panel-title" role="button" data-toggle="collapse"	
+				        data-parent="#accordion-pages" href="#`+id+`" 				
+				        aria-expanded="false" aria-controls="`+id+`"> 									
+				        <a class="collapsed" > 			
+				        	`+ url +` 	 								
+				        </a> 
+				        <span class="badge badge-danger">Errors: `+errors.length+`</span>
+				        <span class="badge badge-warning">Warnings: `+warnings.length+`</span>																
+				      </p> 														
+				    </div>	
+
+				    <div id="`+id+`" class="panel-collapse collapse" 			
+				    role="tabpanel" aria-labelledby="headingTwo"> 					
+				      <div class="panel-body"> 	
+				      	<div class="panel__errors">
+				      		<ul>
+				         		`+ render.issues(errors)+`
+				         	</ul>
+				         </div>	
+				         <div class="panel__warnings">
+				         	<ul>
+				         		`+ render.issues(warnings)+`
+				         	</ul>
+				         </div>									
+				      </div> 														
+				    </div> 															
+				  </div> 															
+				</div>`;
 		$dataPagesSection.append(data)
 	},
 	issues: (list) => {
@@ -448,11 +474,18 @@ const render = {
 		return data;
 	},
 	updateProgressBar: (progress) => {
-
 		pubsub.trigger('updateProgressBar', progress);
 	},
 	disableRunBtn: () => {
 		$btnTrigger.button('loading');
+	},
+	enableRunBtn: () => {
+		$btnTrigger.button('reset');
+	},
+	updateTotals: (totalErrors, totalWarnings) => {
+		console.log('totalErrors: '+ totalErrors)
+		render.$totalErrors.html(totalErrors);
+		render.$totalWarnings.html(totalWarnings);
 	}
 }
 
